@@ -20,6 +20,6 @@ else
 
     foreach (var validationError in validationResult.Errors)
     {
-        Console.WriteLine(validationError.ErrorMessage);
+        Console.WriteLine($"{validationError.PropertyName}: {validationError.ErrorMessage}");
     }
 }
