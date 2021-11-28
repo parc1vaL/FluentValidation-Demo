@@ -9,7 +9,11 @@ var customer = new Customer
 
 if (IsValid(customer))
 {
-    System.Console.WriteLine($"Customer {customer.Name} saved.");    
+    Console.WriteLine($"Customer {customer.Name} saved.");    
+}
+else 
+{
+    Console.WriteLine("Invalid customer.");
 }
 
 bool IsValid(Customer customer)
