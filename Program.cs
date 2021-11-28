@@ -7,17 +7,19 @@ var customer = new Customer
     Postcode = "Neverland",
 };
 
-if (IsValid(customer))
+var validator = new CustomerValidator();
+var validationResult = validator.Validate(customer);
+
+if (validationResult.IsValid)
 {
     Console.WriteLine($"Customer {customer.Name} saved.");    
 }
 else 
 {
     Console.WriteLine("Invalid customer.");
-}
 
-bool IsValid(Customer customer)
-{
-    /// ???
-    return true;
+    foreach (var validationError in validationResult.Errors)
+    {
+        Console.WriteLine(validationError.ErrorMessage);
+    }
 }
