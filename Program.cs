@@ -1,6 +1,6 @@
 var customer = new Customer
 {
-    Name = "Peter Pan",
+    Name = "P",
     Country = Country.Canada,
     HasDiscount = true,
     Discount = 0.0m,
