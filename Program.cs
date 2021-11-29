@@ -1,25 +1,35 @@
-var customer = new Customer
-{
-    Name = "P",
-    Country = Country.Canada,
-    HasDiscount = true,
-    Discount = 0.0m,
-    Postcode = "Neverland",
-};
+using FluentValidation;
+using FluentValidationDemo.Behaviors;
+using FluentValidationDemo.Features.Customers.Add;
+using MediatR;
 
-var validator = new CustomerValidator();
-var validationResult = validator.Validate(customer);
+var builder = WebApplication.CreateBuilder(args);
 
-if (validationResult.IsValid)
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+builder.Services.AddScoped<IValidator<AddCustomerCommand>, AddCustomerValidator>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    Console.WriteLine($"Customer {customer.Name} saved.");    
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-else 
-{
-    Console.WriteLine("Invalid customer.");
 
-    foreach (var validationError in validationResult.Errors)
-    {
-        Console.WriteLine($"{validationError.PropertyName}: {validationError.ErrorMessage}");
-    }
-}
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
