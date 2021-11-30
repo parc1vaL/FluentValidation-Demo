@@ -1,0 +1,52 @@
+﻿@page "/"
+@using FluentValidationDemo.Data
+@using FluentValidationDemo.Components
+@inject ILogger<Index> Logger
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<EditForm Model="@customer" OnValidSubmit="@HandleValidSubmit">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <p>
+        <label>
+            Name:
+            <InputText @bind-Value="customer.Name" />
+        </label>
+    </p>
+
+    <p>
+        <label>
+            Country:
+            <InputSelect @bind-Value="customer.Country">
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="Germany">Germany</option>
+            </InputSelect>
+        </label>
+    </p>
+
+    <p>
+        <label>
+            Postcode:
+            <InputText @bind-Value="customer.Postcode" />
+        </label>
+    </p>
+
+    <button type="submit">Submit</button>
+
+</EditForm>
+
+@code {
+    private Customer customer = new();
+
+    private void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called");
+
+        // Process the valid form
+    }
+}

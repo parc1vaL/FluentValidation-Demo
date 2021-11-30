@@ -1,25 +1,31 @@
-var customer = new Customer
-{
-    Name = "P",
-    Country = Country.Canada,
-    HasDiscount = true,
-    Discount = 0.0m,
-    Postcode = "Neverland",
-};
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using FluentValidationDemo.Data;
+using FluentValidation;
 
-var validator = new CustomerValidator();
-var validationResult = validator.Validate(customer);
+var builder = WebApplication.CreateBuilder(args);
 
-if (validationResult.IsValid)
+// Add services to the container.
+builder.Services.AddRazorPages();
+builder.Services.AddServerSideBlazor();
+
+builder.Services.AddTransient<IValidator<Customer>, CustomerValidator>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    Console.WriteLine($"Customer {customer.Name} saved.");    
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
-else 
-{
-    Console.WriteLine("Invalid customer.");
 
-    foreach (var validationError in validationResult.Errors)
-    {
-        Console.WriteLine($"{validationError.PropertyName}: {validationError.ErrorMessage}");
-    }
-}
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.MapBlazorHub();
+app.MapFallbackToPage("/_Host");
+
+app.Run();

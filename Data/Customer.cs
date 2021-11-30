@@ -1,3 +1,5 @@
+namespace FluentValidationDemo.Data;
+
 public class Customer 
 {
   public string Name { get; set; }

@@ -1,6 +1,8 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
 
+namespace FluentValidationDemo.Data;
+
 public class CustomerValidator : AbstractValidator<Customer>
 {
     public CustomerValidator()
@@ -27,9 +29,9 @@ public class CustomerValidator : AbstractValidator<Customer>
     {
         return customer.Country switch
         {
-            Country.Canada => Regex.Match(postcode, "[0-9]{4}").Success,
-            Country.USA => Regex.Match(postcode, "[A-Z]{2}-[0-9]{5}").Success,
-            Country.Germany => Regex.Match(postcode, "[0-9]{5}").Success,
+            Country.Canada => Regex.Match(postcode, "^[0-9]{4}$").Success,
+            Country.USA => Regex.Match(postcode, "^[A-Z]{2}-[0-9]{5}$").Success,
+            Country.Germany => Regex.Match(postcode, "^[0-9]{5}$").Success,
             _ => false,
         };
     }
