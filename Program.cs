@@ -9,25 +9,17 @@ var customer = new Customer
     Postcode = "Neverland",
 };
 
-Validate(customer);
+var context = new ValidationContext(customer, serviceProvider: null, items: null);
+var errorResults = new List<ValidationResult>();
 
-void Validate(Customer customer)
+if (Validator.TryValidateObject(customer, context, errorResults, true))
 {
-    var context = new ValidationContext(customer, serviceProvider: null, items: null);
-    var errorResults = new List<ValidationResult>();
-
-    // carry out validation.
-    var isValid = Validator.TryValidateObject(customer, context, errorResults, true);
-
-    if (isValid)
+    System.Console.WriteLine($"Model is valid.");
+}
+else
+{
+    foreach (var error in errorResults)
     {
-        System.Console.WriteLine($"Model is valid.");
-    }
-    else
-    {
-        foreach (var error in errorResults)
-        {
-            System.Console.WriteLine($"{string.Join(", ", error.MemberNames)}: {error.ErrorMessage}");
-        }
+        System.Console.WriteLine($"{string.Join(", ", error.MemberNames)}: {error.ErrorMessage}");
     }
 }
