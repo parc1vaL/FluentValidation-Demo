@@ -1,23 +1,33 @@
+using System.ComponentModel.DataAnnotations;
+
 var customer = new Customer
 {
-    Name = "Peter Pan",
+    Name = "P",
     Country = Country.Canada,
     HasDiscount = true,
     Discount = 0.0m,
     Postcode = "Neverland",
 };
 
-if (IsValid(customer))
-{
-    Console.WriteLine($"Customer {customer.Name} saved.");    
-}
-else 
-{
-    Console.WriteLine("Invalid customer.");
-}
+Validate(customer);
 
-bool IsValid(Customer customer)
+void Validate(Customer customer)
 {
-    /// ???
-    return true;
+    var context = new ValidationContext(customer, serviceProvider: null, items: null);
+    var errorResults = new List<ValidationResult>();
+
+    // carry out validation.
+    var isValid = Validator.TryValidateObject(customer, context, errorResults, true);
+
+    if (isValid)
+    {
+        System.Console.WriteLine($"Model is valid.");
+    }
+    else
+    {
+        foreach (var error in errorResults)
+        {
+            System.Console.WriteLine($"{string.Join(", ", error.MemberNames)}: {error.ErrorMessage}");
+        }
+    }
 }
