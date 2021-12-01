@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 var customer = new Customer
 {
-    Name = "P",
+    Name = "Peter Pan",
     Country = Country.Canada,
     HasDiscount = true,
     Discount = 0.0m,
