@@ -9,7 +9,7 @@ var customer = new Customer
     Postcode = "Neverland",
     Orders =
     {
-        new Order { OrderTotal = 0.0m, },
+        new Order { OrderTotal = -10.0m, },
     }
 };
 

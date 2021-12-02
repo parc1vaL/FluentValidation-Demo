@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-public class Customer 
+public class Customer
 {
     [Required(ErrorMessage = "Name is required.")]
     [StringLength(200, MinimumLength = 2, ErrorMessage = "Name must be between 2 and 200 characters.")]
@@ -20,7 +20,7 @@ public class Customer
     public List<Order> Orders { get; } = new();
 }
 
-public class Order 
+public class Order
 {
     [Range(0.0, double.PositiveInfinity)]
     public decimal OrderTotal { get; set; }
