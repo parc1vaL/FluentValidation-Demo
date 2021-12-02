@@ -1,6 +1,6 @@
 public enum Country
 {
-  USA,
-  Canada,
-  Germany,
+    USA,
+    Canada,
+    Germany,
 }

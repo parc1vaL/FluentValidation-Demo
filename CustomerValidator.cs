@@ -4,9 +4,6 @@ public class CustomerValidator : AbstractValidator<Customer>
 {
     public CustomerValidator()
     {
-        // Stop validation on first error of each property
-        CascadeMode = CascadeMode.Stop;
-
         RuleFor(c => c.Name)
             .NotEmpty()
             .Length(2, 200);
@@ -17,5 +14,12 @@ public class CustomerValidator : AbstractValidator<Customer>
         RuleFor(c => c.Postcode)
             .NotEmpty()
             .Matches("[0-9]{5}");
+
+        RuleForEach(c => c.Orders)
+            .NotNull()
+            .ChildRules(order =>
+            {
+                order.RuleFor(o => o.OrderTotal).GreaterThan(0.0m);
+            });
     }
 }

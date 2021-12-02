@@ -5,6 +5,10 @@ var customer = new Customer
     HasDiscount = true,
     Discount = 0.0m,
     Postcode = "Neverland",
+    Orders = 
+    {
+        new Order { OrderTotal = 0.0m, },
+    },
 };
 
 var validator = new CustomerValidator();
