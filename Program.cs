@@ -7,6 +7,10 @@ var customer = new Customer
     HasDiscount = true,
     Discount = 0.0m,
     Postcode = "Neverland",
+    Orders =
+    {
+        new Order { OrderTotal = 0.0m, },
+    }
 };
 
 var context = new ValidationContext(customer, serviceProvider: null, items: null);
@@ -14,12 +18,12 @@ var errorResults = new List<ValidationResult>();
 
 if (Validator.TryValidateObject(customer, context, errorResults, true))
 {
-    System.Console.WriteLine($"Model is valid.");
+    Console.WriteLine($"Model is valid.");
 }
 else
 {
     foreach (var error in errorResults)
     {
-        System.Console.WriteLine($"{string.Join(", ", error.MemberNames)}: {error.ErrorMessage}");
+        Console.WriteLine($"{string.Join(", ", error.MemberNames)}: {error.ErrorMessage}");
     }
 }
