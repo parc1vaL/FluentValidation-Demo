@@ -1,8 +1,7 @@
-using System.ComponentModel.DataAnnotations;
 
 var customer = new Customer
 {
-    Name = "Peter Pan",
+    Name = "P",
     Country = Country.Canada,
     HasDiscount = true,
     Discount = 0.0m,
@@ -13,17 +12,17 @@ var customer = new Customer
     }
 };
 
-var context = new ValidationContext(customer, serviceProvider: null, items: null);
-var errorResults = new List<ValidationResult>();
+var validator = new CustomerValidator();
+var validationResult = validator.Validate(customer);
 
-if (Validator.TryValidateObject(customer, context, errorResults, true))
+if (validationResult.IsValid)
 {
-    Console.WriteLine($"Model is valid.");
+    System.Console.WriteLine("Success");
 }
 else
 {
-    foreach (var error in errorResults)
+    foreach (var error in validationResult.Errors)
     {
-        Console.WriteLine($"{string.Join(", ", error.MemberNames)}: {error.ErrorMessage}");
+        System.Console.WriteLine($"{error.PropertyName}: {error.ErrorMessage}");
     }
 }
